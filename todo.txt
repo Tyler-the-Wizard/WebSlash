@@ -1,0 +1,7 @@
+TODOS:
+
+- Make an interactive menu for game startup
+- Make the game save levels
+- Make the game generate levels
+- Manage equipment
+- Monster AI
