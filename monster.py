@@ -1,4 +1,4 @@
-from random import choice, randint
+from random import choice, randint, uniform
 
 import constants
 import dice
@@ -93,9 +93,9 @@ monsters_by_level = {
 def make_appropriate_monster(x, y):
     lvl = 0
     if settings.player.lvl == 1:
-        lvl = randint(1, 2)
+        lvl = uniform(0, 1) > 0.3 and 1 or 2
     else:
-        lvl = settings.player.lvl + randint(-3, 3)
+        lvl = settings.player.lvl + randint(-1, 1)
 
     if lvl < 1:
         lvl = 1

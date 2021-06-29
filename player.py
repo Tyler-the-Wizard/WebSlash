@@ -153,6 +153,7 @@ class Player(monster.Monster):
     def die(self):
         dialog.popup("Oh no! You died!")
         self.inv.clear()
+        level.reset()
 
 def draw_stats(player, surface):
     text.write("Inventory", surface, 0, 0, True)

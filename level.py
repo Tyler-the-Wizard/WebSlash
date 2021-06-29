@@ -24,18 +24,10 @@ def init():
 
     load_level(level_names[0])
 
-    # for _ in range(5):
-    #     rand_x = randint(0, 10)
-    #     rand_y = randint(0, 10)
-
-    #     if settings.grid[rand_x][rand_y] == 1:
-    #         rand_item = item.make_random_item_stack(rand_x, rand_y)
-
-    # # Make lots of monsters
-    # for i in range(10):
-    #     monster.make_appropriate_monster(randint(0, 10), randint(0, 10))
-
-    # random_maze.make_room(15, 2, 4, 4)
+def reset():
+    global levels, current_level
+    levels.clear()
+    current_level = 0
 
 def load_level(filename):
     file_handle = open("levels/" + filename + ".dat", "r")
@@ -59,6 +51,18 @@ def load_level(filename):
                 settings.player.y = y
 
             settings.grid[x].append(tile)
+
+    # Random items
+    for _ in range(5):
+       rand_x = randint(0, 10)
+       rand_y = randint(0, 10)
+
+       if settings.grid[rand_x][rand_y] == 1:
+           rand_item = item.make_random_item_stack(rand_x, rand_y)
+
+    # Make lots of monsters
+    for i in range(10):
+        monster.make_appropriate_monster(randint(0, 10), randint(0, 10))
 
 def next_level():
     global levels, current_level
