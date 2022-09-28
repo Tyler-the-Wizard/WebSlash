@@ -3,7 +3,7 @@ import spriteloader
 
 class Monster:
     def __init__(self) -> None:
-        self.sprite = spriteloader.sprite(3, 8)
+        self.sprite = spriteloader.sprite(3, 8, constants.COLOR_RED)
         self.x = 2
         self.y = 5
     
