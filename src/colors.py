@@ -19,7 +19,7 @@ palettes = [
     pygame.Color(240,  84, 245), # MAGENTA
 
     pygame.Color( 61,  66,  70), # GRAY
-    pygame.Color(234, 234, 223), # LIGHT_GRAY
+    pygame.Color(178, 178, 172), # LIGHT_GRAY
     pygame.Color(249, 197, 227), # PINK
     pygame.Color(240, 171,  99), # ORANGE
     pygame.Color(198, 249, 144), # LIGHT_GREEN

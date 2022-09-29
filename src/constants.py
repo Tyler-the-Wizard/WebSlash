@@ -2,6 +2,9 @@ import pygame
 
 FPS = 60
 
+# Converts between tile index and actual tile coordinates.
+TILE_DICT = [(i + 1, 26) for i in range(17)]
+
 # Color indices for colors.py
 BG = 0
 FG = 1

@@ -1,9 +1,13 @@
+import colors
 import constants
 import spriteloader
 
 class Monster:
     def __init__(self) -> None:
-        self.sprite = spriteloader.sprite(3, 8, constants.COLOR_RED)
+        self.sprite = spriteloader.sprite(
+            3, 8,
+            colors.palette_color(constants.FG)
+        )
         self.x = 2
         self.y = 5
     
