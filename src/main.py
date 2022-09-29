@@ -5,6 +5,9 @@ import pygame
 pygame.init()
 screen = pygame.display.set_mode(settings.SCREEN_SIZE)
 
+fps_clock = pygame.time.Clock()
+
+import constants
 import events
 import monsters
 
@@ -23,3 +26,4 @@ while settings.DO_MAIN_LOOP:
         pass
     
     pygame.display.flip()
+    fps_clock.tick(constants.FPS)

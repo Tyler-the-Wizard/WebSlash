@@ -1,5 +1,7 @@
 import pygame
 
+FPS = 60
+
 COLOR_RED = pygame.Color(255, 0, 0)
 
 SPRITE_BG_COLOR = pygame.Color(17, 17, 51)
