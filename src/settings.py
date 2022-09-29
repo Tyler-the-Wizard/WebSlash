@@ -11,5 +11,8 @@ def init():
     global GAME_TILES
     GAME_TILES = []
 
+    global PALETTE_INDEX
+    PALETTE_INDEX = 0
+
     global SCREEN_SIZE
     SCREEN_SIZE = (1200, 800)
