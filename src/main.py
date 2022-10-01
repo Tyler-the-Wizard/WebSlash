@@ -13,11 +13,14 @@ import events
 import monsters
 import level
 
+# TEST CODE
 test_level = level.load('levels/small.dat')
 settings.CURRENT_LEVEL = test_level
 
+# TEST CODE
 test_mon = monsters.Monster()
 settings.CURRENT_LEVEL.monsters.append(test_mon)
+settings.PLAYER = test_mon
 
 # Main game loop
 while settings.DO_MAIN_LOOP:

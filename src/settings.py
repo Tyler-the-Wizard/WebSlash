@@ -21,5 +21,8 @@ def init():
     global PALETTE_INDEX
     PALETTE_INDEX = 0
 
+    global PLAYER
+    PLAYER = None
+
     global SCREEN_SIZE
     SCREEN_SIZE = (1200, 800)
