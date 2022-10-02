@@ -5,7 +5,7 @@ FPS = 60
 # Converts between tile index and actual tile coordinates.
 TILE_DICT = [(i + 1, 26) for i in range(17)]
 
-# Color indices for colors.py
+# Color enum for colors.py
 BG = 0
 FG = 1
 RED = 2
@@ -23,6 +23,10 @@ LIGHT_GREEN = 12
 DEEP_BLUE = 13
 SKY_BLUE = 14
 PURPLE = 15
+
+# Collision bitmask for tiles.py
+WALL = 1
+WATER = 2
 
 SPRITE_BG_COLOR = pygame.Color(17, 17, 51)
 SPRITE_FG_COLOR = pygame.Color(238, 238, 204)
