@@ -19,9 +19,9 @@ class Tilemap:
                 new_tile = Tile(
                     spriteloader.sprite(
                         x, y,
-                        colors.palette_color(constants.LIGHT_GRAY)
+                        colors.palette_color(constants.C_LIGHT_GRAY)
                     ),
-                    None
+                constants.CL_NONE if i == 0 else constants.CL_WALL
                 )
 
                 new_row.append(new_tile)

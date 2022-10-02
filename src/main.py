@@ -26,7 +26,7 @@ settings.PLAYER = test_mon
 while settings.DO_MAIN_LOOP:
     events.handle_events(pygame.event.get())
 
-    screen.fill(colors.palette_color(constants.BG))
+    screen.fill(colors.palette_color(constants.C_BG))
 
     settings.CURRENT_DRAW_CONTEXT(screen)
     

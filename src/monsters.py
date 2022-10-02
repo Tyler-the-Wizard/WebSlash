@@ -6,7 +6,7 @@ class Monster:
     def __init__(self) -> None:
         self.sprite = spriteloader.sprite(
             3, 8,
-            colors.palette_color(constants.FG)
+            colors.palette_color(constants.C_FG)
         )
         self.x = 2
         self.y = 5

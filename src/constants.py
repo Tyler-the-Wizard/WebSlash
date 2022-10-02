@@ -6,27 +6,28 @@ FPS = 60
 TILE_DICT = [(i + 1, 26) for i in range(17)]
 
 # Color enum for colors.py
-BG = 0
-FG = 1
-RED = 2
-YELLOW = 3
-GREEN = 4
-BLUE = 5
-CYAN = 6
-MAGENTA = 7
+C_BG = 0
+C_FG = 1
+C_RED = 2
+C_YELLOW = 3
+C_GREEN = 4
+C_BLUE = 5
+C_CYAN = 6
+C_MAGENTA = 7
 
-GRAY = 8
-LIGHT_GRAY = 9
-PINK = 10
-ORANGE = 11
-LIGHT_GREEN = 12
-DEEP_BLUE = 13
-SKY_BLUE = 14
-PURPLE = 15
+C_GRAY = 8
+C_LIGHT_GRAY = 9
+C_PINK = 10
+C_ORANGE = 11
+C_LIGHT_GREEN = 12
+C_DEEP_BLUE = 13
+C_SKY_BLUE = 14
+C_PURPLE = 15
 
 # Collision bitmask for tiles.py
-WALL = 1
-WATER = 2
+CL_NONE = 0
+CL_WALL = 1
+CL_WATER = 2
 
 SPRITE_BG_COLOR = pygame.Color(17, 17, 51)
 SPRITE_FG_COLOR = pygame.Color(238, 238, 204)

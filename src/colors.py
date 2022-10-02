@@ -9,21 +9,21 @@ def palette_color(color_index):
 
 palettes = [
     # 0 - default palette
-   [pygame.Color( 29,  36,  42), # BG
-    pygame.Color(255, 255, 243), # FG
-    pygame.Color(235,  78,  91), # RED
-    pygame.Color(246, 214, 140), # YELLOW
-    pygame.Color(133, 242, 116), # GREEN
-    pygame.Color(116, 116, 240), # BLUE
-    pygame.Color(116, 233, 240), # CYAN
-    pygame.Color(240,  84, 245), # MAGENTA
+   [pygame.Color( 29,  36,  42), # C_BG
+    pygame.Color(255, 255, 243), # C_FG
+    pygame.Color(235,  78,  91), # C_RED
+    pygame.Color(246, 214, 140), # C_YELLOW
+    pygame.Color(133, 242, 116), # C_GREEN
+    pygame.Color(116, 116, 240), # C_BLUE
+    pygame.Color(116, 233, 240), # C_CYAN
+    pygame.Color(240,  84, 245), # C_MAGENTA
 
-    pygame.Color( 61,  66,  70), # GRAY
-    pygame.Color(178, 178, 172), # LIGHT_GRAY
-    pygame.Color(249, 197, 227), # PINK
-    pygame.Color(240, 171,  99), # ORANGE
-    pygame.Color(198, 249, 144), # LIGHT_GREEN
-    pygame.Color( 17,  17, 193), # DEEP_BLUE
-    pygame.Color(184, 251, 255), # SKY_BLUE
-    pygame.Color(148,  86, 195)] # PURPLE
+    pygame.Color( 61,  66,  70), # C_GRAY
+    pygame.Color(178, 178, 172), # C_LIGHT_GRAY
+    pygame.Color(249, 197, 227), # C_PINK
+    pygame.Color(240, 171,  99), # C_ORANGE
+    pygame.Color(198, 249, 144), # C_LIGHT_GREEN
+    pygame.Color( 17,  17, 193), # C_DEEP_BLUE
+    pygame.Color(184, 251, 255), # C_SKY_BLUE
+    pygame.Color(148,  86, 195)] # C_PURPLE
 ]
