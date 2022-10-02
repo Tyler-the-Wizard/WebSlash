@@ -1,5 +1,14 @@
 import pygame, settings
 
+def player_move(dx, dy):
+    '''Convenience function for player movement'''
+    if settings.PLAYER.try_move(
+        settings.PLAYER.x + dx,
+        settings.PLAYER.y + dy,
+    ):
+        # Advance the turn
+        pass # TODO when turns are implemented
+
 def handle_events(events):
     for event in events:
         if event.type == pygame.QUIT:
@@ -8,27 +17,23 @@ def handle_events(events):
         if event.type == pygame.KEYDOWN:
             # Standard movement
             if event.key == pygame.K_w:
-                settings.PLAYER.y -= 1
+                player_move(0, -1)
             if event.key == pygame.K_s:
-                settings.PLAYER.y += 1
+                player_move(0, 1)
             if event.key == pygame.K_a:
-                settings.PLAYER.x -= 1
+                player_move(-1, 0)
             if event.key == pygame.K_d:
-                settings.PLAYER.x += 1
+                player_move(1, 0)
 
             # Diagonal movement
             if event.key == pygame.K_q:
-                settings.PLAYER.y -= 1
-                settings.PLAYER.x -= 1
+                player_move(-1, -1)
             if event.key == pygame.K_e:
-                settings.PLAYER.y -= 1
-                settings.PLAYER.x += 1
+                player_move(1, -1)
             if event.key == pygame.K_z:
-                settings.PLAYER.y += 1
-                settings.PLAYER.x -= 1
+                player_move(-1, 1)
             if event.key == pygame.K_c:
-                settings.PLAYER.y += 1
-                settings.PLAYER.x += 1
+                player_move(1, 1)
             
             # Holding still for a turn
             if event.key == pygame.K_x:
