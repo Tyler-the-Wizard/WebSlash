@@ -1,4 +1,7 @@
+from random import randint, random
 import pygame, settings
+
+from math import floor
 
 def player_move(dx, dy):
     '''Convenience function for player movement'''
@@ -6,8 +9,22 @@ def player_move(dx, dy):
         settings.PLAYER.x + dx,
         settings.PLAYER.y + dy,
     ):
-        # Advance the turn
-        pass # TODO when turns are implemented
+        do_turn()
+
+def do_turn():
+    for mon in settings.GAME.get_current_level().monsters:
+        if mon is not settings.PLAYER:
+            mon.turn_count += mon.speed / settings.PLAYER.speed * (random() + 0.5)
+            while mon.turn_count >= 1:
+                mon.turn_count -= 1
+                do_move = True
+                while do_move:
+                    dx = randint(-1, 1)
+                    dy = randint(-1, 1)
+                    if dx == 0 and dy == 0:
+                        continue
+
+                    do_move = not mon.try_move(mon.x + dx, mon.y + dy)
 
 def handle_events(events):
     for event in events:
@@ -37,4 +54,4 @@ def handle_events(events):
             
             # Holding still for a turn
             if event.key == pygame.K_x:
-                pass # TODO when turns are implemented
+                do_turn()

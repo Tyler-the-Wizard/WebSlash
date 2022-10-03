@@ -17,7 +17,10 @@ def factory(mon_name, x, y):
 mon_lib = {
 #   'mon_name' : ['Display Name', speed, max_health, collision, sprite(x, y, color)]
     'player' : ['PLAYER', 60, 10, constants.CL_NONE, sprite(3, 8, color(constants.C_FG))],
-    'unknown' : ['???', 60, -1, 256, sprite(14, 6, color(constants.C_MAGENTA))]
+    'unknown' : ['???', 60, -1, 255, sprite(14, 6, color(constants.C_MAGENTA))],
+    'goblin' : ['goblin', 60, 3, constants.CL_NONE, sprite(2, 17, color(constants.C_GREEN))],
+    'golem' : ['golem', 30, 50, constants.CL_NONE, sprite(9, 23, color(constants.C_GRAY))],
+    'snake' : ['snake', 180, 5, constants.CL_NONE, sprite(8, 14, color(constants.C_CYAN))],
 }
 
 class Monster:
@@ -33,6 +36,9 @@ class Monster:
 
         self.collision = collision
         self.sprite = sprite
+
+        # Used to keep track of when this monster can move
+        self.turn_count = 0.0
     
     def draw(self, surface, camera=(0, 0)):
         surface.blit(self.sprite, (self.x * constants.TILE_SCALE - camera[0], self.y * constants.TILE_SCALE - camera[1]))

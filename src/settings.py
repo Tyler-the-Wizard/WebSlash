@@ -22,4 +22,4 @@ def init():
     PLAYER = None
 
     global SCREEN_SIZE
-    SCREEN_SIZE = (1200, 800)
+    SCREEN_SIZE = (1200, 700)

@@ -1,8 +1,4 @@
-import constants
 import tiles
-
-# This class is under construction and the level-related
-# functions will eventually be moved into the Level class.
 
 class Level:
     '''A Level object represents a single level
@@ -25,7 +21,7 @@ class Level:
         for monster in self.monsters:
             monster.draw(surface, camera)
 
-# TODO Level file format needs a severe rework
+# TODO Level file format needs to include monsters, items, depth, name? in the file
 
 def load(filename, depth=0) -> Level:
     '''Loads a level from a file.'''

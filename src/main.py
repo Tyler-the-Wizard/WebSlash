@@ -23,7 +23,10 @@ settings.GAME.current_level = 0
 player = monsters.factory('player', 1, 1)
 settings.PLAYER = player # TODO implement Player subclass of Monster
 
-test_mon = monsters.factory('garbage', 5, 5)
+# Add some monsters to play with
+monsters.factory('goblin', 2, 2)
+monsters.factory('golem', 3, 3)
+monsters.factory('snake', 4, 4)
 
 # Main game loop
 while settings.DO_MAIN_LOOP:
