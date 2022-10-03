@@ -1,17 +1,35 @@
 import colors
 import constants
 import settings
-import spriteloader
+from spriteloader import sprite
+
+def factory(mon_name, x, y):
+    if mon_name not in mon_lib:
+        print(f'monsters.py: monster \'{mon_name}\' not found!')
+        mon_name = 'unknown'
+
+    args = mon_lib[mon_name]
+    return Monster(mon_name, x, y, *args)
+
+mon_lib = {
+#   'mon_name' : ['Display Name', speed, max_health, collision, sprite(x, y, color)]
+    'player' : ['PLAYER', 60, 10, constants.CL_NONE, sprite(3, 8, colors.palette_color(constants.C_FG))],
+    'unknown' : ['???', 60, -1, 256, sprite(14, 6, colors.palette_color(constants.C_MAGENTA))]
+}
 
 class Monster:
-    def __init__(self) -> None:
-        self.sprite = spriteloader.sprite(
-            3, 8,
-            colors.palette_color(constants.C_FG)
-        )
-        self.x = 2
-        self.y = 5
-        self.collision = constants.CL_NONE # can not move into anything
+    def __init__(self, mon_name, x, y, display_name, speed, hp, collision, sprite) -> None:
+        self.mon_name = mon_name
+        self.x = x
+        self.y = y
+
+        self.display_name = display_name
+        self.speed = speed
+        self.max_hp = hp
+        self.hp = hp
+
+        self.collision = collision
+        self.sprite = sprite
     
     def draw(self, surface, camera=(0, 0)):
         surface.blit(self.sprite, (self.x * constants.TILE_SCALE - camera[0], self.y * constants.TILE_SCALE - camera[1]))

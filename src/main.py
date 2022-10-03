@@ -18,9 +18,12 @@ test_level = level.load('levels/big.dat')
 settings.CURRENT_LEVEL = test_level
 
 # TEST CODE
-test_mon = monsters.Monster()
+player = monsters.factory('player', 1, 1)
+settings.CURRENT_LEVEL.monsters.append(player)
+settings.PLAYER = player
+
+test_mon = monsters.factory('garbage', 5, 5)
 settings.CURRENT_LEVEL.monsters.append(test_mon)
-settings.PLAYER = test_mon
 
 # Main game loop
 while settings.DO_MAIN_LOOP:
