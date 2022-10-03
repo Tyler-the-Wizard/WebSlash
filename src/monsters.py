@@ -46,7 +46,11 @@ class Monster:
     def can_move(self, x, y):
         '''Returns true if this monster's collision
         allows it to validly move to the x, y position.'''
-        tile_collision = settings.GAME.get_current_level().tilemap.tiles[x][y].collision
+        level = settings.GAME.get_current_level()
+        if x < 0 or x >= level.tilemap.size[0] or y < 0 or y >= level.tilemap.size[1]:
+            return False
+
+        tile_collision = level.tilemap.tiles[x][y].collision
         return tile_collision == tile_collision & self.collision
     
     def move(self, x, y):

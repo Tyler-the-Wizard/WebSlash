@@ -16,7 +16,7 @@ class Game:
         return self.levels[self.current_level]
     
     def new_level(self):
-        lvl = level.load('levels/big.dat')
+        lvl = level.load('levels/tiny.dat')
         if self.current_level == None:
             lvl.depth = 0
         else:
