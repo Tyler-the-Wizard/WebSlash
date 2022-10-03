@@ -29,7 +29,13 @@ CL_NONE = 0
 CL_WALL = 1
 CL_WATER = 2
 
+# Constants used to know what colors to
+# replace on the spritesheet
 SPRITE_BG_COLOR = pygame.Color(17, 17, 51)
 SPRITE_FG_COLOR = pygame.Color(238, 238, 204)
-TILE_SCALE = 50
-CAMERA_SHARPNESS = 0.2 # 0-1. lower number means lazier camera
+
+# 0-1. lower number means lazier camera
+CAMERA_SHARPNESS = 0.14
+
+# Sets how wide & tall each tile is, in pixels.
+TILE_SCALE = 40
