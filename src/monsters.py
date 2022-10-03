@@ -1,4 +1,4 @@
-import colors
+from colors import palette_color as color
 import constants
 import settings
 from spriteloader import sprite
@@ -13,8 +13,8 @@ def factory(mon_name, x, y):
 
 mon_lib = {
 #   'mon_name' : ['Display Name', speed, max_health, collision, sprite(x, y, color)]
-    'player' : ['PLAYER', 60, 10, constants.CL_NONE, sprite(3, 8, colors.palette_color(constants.C_FG))],
-    'unknown' : ['???', 60, -1, 256, sprite(14, 6, colors.palette_color(constants.C_MAGENTA))]
+    'player' : ['PLAYER', 60, 10, constants.CL_NONE, sprite(3, 8, color(constants.C_FG))],
+    'unknown' : ['???', 60, -1, 256, sprite(14, 6, color(constants.C_MAGENTA))]
 }
 
 class Monster:
