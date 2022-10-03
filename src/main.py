@@ -14,7 +14,7 @@ import monsters
 import level
 
 # TEST CODE
-test_level = level.load('levels/small.dat')
+test_level = level.load('levels/big.dat')
 settings.CURRENT_LEVEL = test_level
 
 # TEST CODE

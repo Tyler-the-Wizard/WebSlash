@@ -29,10 +29,10 @@ class Tilemap:
 
         self.size = (len(tiles), len(tiles[0]))
     
-    def draw(self, surface):
+    def draw(self, surface, camera=(0,0)):
         for x, row in enumerate(self.tiles):
             for y, tile in enumerate(row):
                 surface.blit(
                     tile.sprite,
-                    (x * constants.TILE_SCALE, y * constants.TILE_SCALE)
+                    (x * constants.TILE_SCALE - camera[0], y * constants.TILE_SCALE - camera[1])
                 )

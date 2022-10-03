@@ -31,4 +31,5 @@ CL_WATER = 2
 
 SPRITE_BG_COLOR = pygame.Color(17, 17, 51)
 SPRITE_FG_COLOR = pygame.Color(238, 238, 204)
-TILE_SCALE = 80
+TILE_SCALE = 50
+CAMERA_SHARPNESS = 0.2 # 0-1. lower number means lazier camera

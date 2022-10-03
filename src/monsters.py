@@ -13,8 +13,8 @@ class Monster:
         self.y = 5
         self.collision = constants.CL_NONE # can not move into anything
     
-    def draw(self, surface):
-        surface.blit(self.sprite, (self.x * constants.TILE_SCALE, self.y * constants.TILE_SCALE))
+    def draw(self, surface, camera=(0, 0)):
+        surface.blit(self.sprite, (self.x * constants.TILE_SCALE - camera[0], self.y * constants.TILE_SCALE - camera[1]))
     
     def can_move(self, x, y):
         '''Returns true if this monster's collision

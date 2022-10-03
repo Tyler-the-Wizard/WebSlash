@@ -14,28 +14,15 @@ class Level:
         self.items = items
         self.monsters = monsters
 
-    def draw(self, surface):
+    def draw(self, surface, camera=(0, 0)):
         # Draw the tilemap
-        # for x, row in enumerate(self.tilemap):
-        #     for y, i in enumerate(row):
-        #         (sprite_x, sprite_y) = constants.TILE_DICT[i]
-        #         tile_sprite = spriteloader.sprite(
-        #             sprite_x,
-        #             sprite_y,
-        #             colors.palette_color(constants.LIGHT_GRAY)
-        #         )
-
-        #         surface.blit(
-        #             tile_sprite,
-        #             (x * constants.TILE_SCALE, y * constants.TILE_SCALE)
-        #         )
-        self.tilemap.draw(surface)
+        self.tilemap.draw(surface, camera)
 
         # Draw each item
 
         # Draw each monster
         for monster in self.monsters:
-            monster.draw(surface)
+            monster.draw(surface, camera)
 
 def load(filename) -> Level:
     '''Loads a level from a file.'''
