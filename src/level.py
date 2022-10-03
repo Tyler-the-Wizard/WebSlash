@@ -9,10 +9,11 @@ class Level:
     of the dungeon, complete with a map of the
     actual tiles, a list of all items, and a
     list of all monsters on the level.'''
-    def __init__(self, tilemap, items, monsters):
+    def __init__(self, tilemap, items, monsters, depth):
         self.tilemap = tilemap
         self.items = items
         self.monsters = monsters
+        self.depth = depth
 
     def draw(self, surface, camera=(0, 0)):
         # Draw the tilemap
@@ -24,14 +25,16 @@ class Level:
         for monster in self.monsters:
             monster.draw(surface, camera)
 
-def load(filename) -> Level:
+# TODO Level file format needs a severe rework
+
+def load(filename, depth=0) -> Level:
     '''Loads a level from a file.'''
     file = open(filename)
     data = file.read()
     file.close()
 
     tilemap = tiles.Tilemap([[int(cell) for cell in row.split(' ')] for row in data.split('\n')])
-    return Level(tilemap, [], [])
+    return Level(tilemap, [], [], depth)
 
 def save(level, filename) -> None:
     '''Saves a level into a file.'''

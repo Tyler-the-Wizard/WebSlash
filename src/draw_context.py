@@ -21,4 +21,4 @@ def standard_gameplay(surface):
     cam_x = floor(lerp(cam_x, cam_goal_x, constants.CAMERA_SHARPNESS))
     cam_y = floor(lerp(cam_y, cam_goal_y, constants.CAMERA_SHARPNESS))
 
-    settings.CURRENT_LEVEL.draw(surface, (cam_x, cam_y))
+    settings.GAME.get_current_level().draw(surface, (cam_x, cam_y))

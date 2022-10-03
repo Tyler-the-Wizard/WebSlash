@@ -10,25 +10,24 @@ fps_clock = pygame.time.Clock()
 import colors
 import constants
 import events
+import game
 import monsters
 import level
 
-# TEST CODE
-test_level = level.load('levels/big.dat')
-settings.CURRENT_LEVEL = test_level
+# TODO implement saving and loading of Games
+settings.GAME = game.Game()
+settings.GAME.new_level()
+settings.GAME.current_level = 0
 
 # TEST CODE
 player = monsters.factory('player', 1, 1)
-settings.CURRENT_LEVEL.monsters.append(player)
-settings.PLAYER = player
+settings.PLAYER = player # TODO implement Player subclass of Monster
 
 test_mon = monsters.factory('garbage', 5, 5)
-settings.CURRENT_LEVEL.monsters.append(test_mon)
 
 # Main game loop
 while settings.DO_MAIN_LOOP:
     events.handle_events(pygame.event.get())
-
     screen.fill(colors.palette_color(constants.C_BG))
 
     settings.CURRENT_DRAW_CONTEXT(screen)

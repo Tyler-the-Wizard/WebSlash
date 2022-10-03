@@ -9,7 +9,10 @@ def factory(mon_name, x, y):
         mon_name = 'unknown'
 
     args = mon_lib[mon_name]
-    return Monster(mon_name, x, y, *args)
+
+    mon = Monster(mon_name, x, y, *args)
+    settings.GAME.get_current_level().monsters.append(mon)
+    return mon
 
 mon_lib = {
 #   'mon_name' : ['Display Name', speed, max_health, collision, sprite(x, y, color)]
@@ -37,7 +40,7 @@ class Monster:
     def can_move(self, x, y):
         '''Returns true if this monster's collision
         allows it to validly move to the x, y position.'''
-        tile_collision = settings.CURRENT_LEVEL.tilemap.tiles[x][y].collision
+        tile_collision = settings.GAME.get_current_level().tilemap.tiles[x][y].collision
         return tile_collision == tile_collision & self.collision
     
     def move(self, x, y):
