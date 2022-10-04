@@ -5,9 +5,12 @@ from math import floor
 
 def player_move(dx, dy):
     '''Convenience function for player movement'''
-    if settings.PLAYER.try_move(
+    if settings.PLAYER.try_attack(
         settings.PLAYER.x + dx,
-        settings.PLAYER.y + dy,
+        settings.PLAYER.y + dy
+    ) or settings.PLAYER.try_move(
+        settings.PLAYER.x + dx,
+        settings.PLAYER.y + dy
     ):
         do_turn()
 
@@ -24,7 +27,11 @@ def do_turn():
                     if dx == 0 and dy == 0:
                         continue
 
-                    do_move = not mon.try_move(mon.x + dx, mon.y + dy)
+                    # Try to attack first
+                    do_move = not mon.try_attack(mon.x + dx, mon.y + dy)
+                    if do_move:
+                        # If we can't attack, try to move
+                        do_move = not mon.try_move(mon.x + dx, mon.y + dy)
 
 def handle_events(events):
     for event in events:

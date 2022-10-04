@@ -68,3 +68,33 @@ class Monster:
             self.move(x, y)
 
         return can_move
+    
+    def take_damage(self, amount):
+        '''Causes this monster to take some damage.'''
+        self.hp -= amount
+        if self.hp <= 0:
+            self.hp = 0
+            self.die()
+    
+    def die(self):
+        '''This function is called when this monster dies.'''
+        if self == settings.PLAYER:
+            # TODO Special death functionality
+            pass
+        else:
+            settings.GAME.get_current_level().monsters.remove(self)
+
+    def attack(self, target):
+        '''Attacks the target monster with a basic attack.'''
+        target.take_damage(self.max_hp // 10)
+
+    def try_attack(self, x, y):
+        '''Attempts to attack the x, y position
+        ONLY if there is a monster there.'''
+        level = settings.GAME.get_current_level()
+        for mon in level.monsters:
+            if mon.x == x and mon.y == y:
+               self.attack(mon)
+               return True
+
+        return False
