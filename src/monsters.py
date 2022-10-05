@@ -1,5 +1,6 @@
 from colors import palette_color as color
 import constants
+from random import randint, random
 import settings
 from spriteloader import sprite
 
@@ -42,6 +43,46 @@ class Monster:
     
     def draw(self, surface, camera=(0, 0)):
         surface.blit(self.sprite, (self.x * constants.TILE_SCALE - camera[0], self.y * constants.TILE_SCALE - camera[1]))
+    
+    def do_turn(self):
+        '''This function is called whenever this
+        monster takes its turn. It includes
+        things like moving towards the player,
+        attacking, and fleeing.'''
+        self.turn_count += self.speed / settings.PLAYER.speed * (random() + 0.5)
+        while self.turn_count >= 1:
+            self.turn_count -= 1
+            do_move = True
+            tries = 4
+            while do_move and tries > 0:
+                tries -= 1
+                dx = 0
+                dy = 0
+                if settings.PLAYER.los(self.x, self.y):
+                    # The player sees us, we see the player. Move towards it.
+                    if settings.PLAYER.x < self.x:
+                        dx = -1
+                    elif settings.PLAYER.x > self.x:
+                        dx = 1
+
+                    if settings.PLAYER.y < self.y:
+                        dy = -1
+                    elif settings.PLAYER.y > self.y:
+                        dy = 1
+
+                else:
+                    # Pick a random square to move to
+                    dx = randint(-1, 1)
+                    dy = randint(-1, 1)
+
+                if dx == 0 and dy == 0:
+                    continue
+
+                # Try to attack first
+                do_move = not self.try_attack(self.x + dx, self.y + dy)
+                if do_move:
+                    # If we can't attack, try to move
+                    do_move = not self.try_move(self.x + dx, self.y + dy)
     
     def can_move(self, x, y):
         '''Returns true if this monster's collision

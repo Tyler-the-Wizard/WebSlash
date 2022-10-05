@@ -1,7 +1,4 @@
-from random import randint, random
 import pygame, settings
-
-from math import floor
 
 def player_move(dx, dy):
     '''Convenience function for player movement'''
@@ -17,21 +14,7 @@ def player_move(dx, dy):
 def do_turn():
     for mon in settings.GAME.get_current_level().monsters:
         if mon is not settings.PLAYER:
-            mon.turn_count += mon.speed / settings.PLAYER.speed * (random() + 0.5)
-            while mon.turn_count >= 1:
-                mon.turn_count -= 1
-                do_move = True
-                while do_move:
-                    dx = randint(-1, 1)
-                    dy = randint(-1, 1)
-                    if dx == 0 and dy == 0:
-                        continue
-
-                    # Try to attack first
-                    do_move = not mon.try_attack(mon.x + dx, mon.y + dy)
-                    if do_move:
-                        # If we can't attack, try to move
-                        do_move = not mon.try_move(mon.x + dx, mon.y + dy)
+            mon.do_turn()
 
 def handle_events(events):
     for event in events:

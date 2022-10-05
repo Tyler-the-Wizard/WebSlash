@@ -12,7 +12,7 @@ import constants
 import events
 import game
 import monsters
-import level
+import player
 
 # TODO implement saving and loading of Games
 settings.GAME = game.Game()
@@ -20,8 +20,7 @@ settings.GAME.new_level()
 settings.GAME.current_level = 0
 
 # TEST CODE
-player = monsters.factory('player', 1, 1)
-settings.PLAYER = player # TODO implement Player subclass of Monster
+player.make_player(1, 1)
 
 monsters.factory('goblin', 10, 10)
 monsters.factory('golem', 11, 10)
