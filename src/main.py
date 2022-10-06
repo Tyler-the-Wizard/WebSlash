@@ -2,6 +2,7 @@ import settings
 settings.init()
 
 import pygame
+import sys
 pygame.init()
 screen = pygame.display.set_mode(settings.SCREEN_SIZE)
 
@@ -35,3 +36,6 @@ while settings.DO_MAIN_LOOP:
     
     pygame.display.flip()
     fps_clock.tick(constants.FPS)
+
+pygame.quit()
+sys.exit(0)
