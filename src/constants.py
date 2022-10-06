@@ -38,4 +38,4 @@ SPRITE_FG_COLOR = pygame.Color(238, 238, 204)
 CAMERA_SHARPNESS = 0.14
 
 # Sets how wide & tall each tile is, in pixels.
-TILE_SCALE = 40
+TILE_SCALE = 100
