@@ -1,3 +1,5 @@
+'''This file contains everything related to line-of-sight calculations.'''
+
 import settings
 
 def los(p0, p1):
