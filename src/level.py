@@ -29,7 +29,10 @@ def load(filename, depth=0) -> Level:
     data = file.read()
     file.close()
 
-    tilemap = tiles.Tilemap([[int(cell) for cell in row.split(' ')] for row in data.split('\n')])
+    # Get rid of empty lines in the file
+    rows = [row for row in data.split('\n') if len(row) > 0]
+
+    tilemap = tiles.Tilemap([[int(cell) for cell in row.split(' ')] for row in rows])
     return Level(tilemap, [], [], depth)
 
 def save(level, filename) -> None:
