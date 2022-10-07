@@ -1,4 +1,6 @@
-import pygame, settings
+import pygame
+import fov
+import settings
 
 def player_move(dx, dy):
     '''Convenience function for player movement'''
@@ -15,6 +17,7 @@ def do_turn():
     for mon in settings.GAME.get_current_level().monsters:
         if mon is not settings.PLAYER:
             mon.do_turn()
+    fov.refresh_visibility(settings.PLAYER.x, settings.PLAYER.y)
 
 def handle_events(events):
     for event in events:

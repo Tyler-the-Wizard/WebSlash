@@ -7,6 +7,13 @@ class Tile:
         self.sprite = sprite
         self.collision = collision
         self.blocks_sight = blocks_sight
+        self.is_visible = False
+        self.seen = False
+
+    def set_visibility(self, new_visibility):
+        if new_visibility:
+            self.seen = True
+        self.is_visible = new_visibility
 
 class Tilemap:
     '''A 2D grid of tiles.'''
@@ -34,7 +41,8 @@ class Tilemap:
     def draw(self, surface, camera=(0,0)):
         for x, row in enumerate(self.tiles):
             for y, tile in enumerate(row):
-                surface.blit(
-                    tile.sprite,
-                    (x * constants.TILE_SCALE - camera[0], y * constants.TILE_SCALE - camera[1])
-                )
+                if tile.seen:
+                    surface.blit(
+                        tile.sprite,
+                        (x * constants.TILE_SCALE - camera[0], y * constants.TILE_SCALE - camera[1])
+                    )
