@@ -4,6 +4,15 @@ settings.init()
 import pygame
 import sys
 pygame.init()
+
+# Get display resolution
+info = pygame.display.Info()
+screen_width = info.current_w
+screen_height = info.current_h
+
+settings.SCREEN_SIZE = (screen_width // 3 * 2, screen_height // 3 * 2)
+settings.TILE_SCALE = max(screen_width, screen_height) // 50
+
 screen = pygame.display.set_mode(settings.SCREEN_SIZE)
 
 fps_clock = pygame.time.Clock()
