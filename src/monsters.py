@@ -42,7 +42,7 @@ class Monster:
         self.turn_count = 0.0
     
     def draw(self, surface, camera=(0, 0)):
-        surface.blit(self.sprite, (self.x * constants.TILE_SCALE - camera[0], self.y * constants.TILE_SCALE - camera[1]))
+        surface.blit(self.sprite, (self.x * settings.TILE_SCALE - camera[0], self.y * settings.TILE_SCALE - camera[1]))
     
     def do_turn(self):
         '''This function is called whenever this

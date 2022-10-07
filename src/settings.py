@@ -23,3 +23,6 @@ def init():
 
     global SCREEN_SIZE
     SCREEN_SIZE = (2000, 1400)
+
+    global TILE_SCALE
+    TILE_SCALE = 100

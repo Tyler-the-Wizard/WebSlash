@@ -1,5 +1,6 @@
 import colors
 import constants
+import settings
 import spriteloader
 
 class Tile:
@@ -44,5 +45,5 @@ class Tilemap:
                 if tile.seen:
                     surface.blit(
                         tile.sprite,
-                        (x * constants.TILE_SCALE - camera[0], y * constants.TILE_SCALE - camera[1])
+                        (x * settings.TILE_SCALE - camera[0], y * settings.TILE_SCALE - camera[1])
                     )

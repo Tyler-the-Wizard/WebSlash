@@ -1,5 +1,6 @@
 import pygame
 import constants
+import settings
 
 SPRITE_WIDTH = 16
 SPRITE_HEIGHT = 16
@@ -20,14 +21,14 @@ def sprite(x, y, color):
     '''Automatically loads the image at the specified sprite coordinate.
     For x=0, y=2, will load image at x=0px, y=32px.'''
     sprite = get_sprite(x, y, SPRITE_WIDTH, SPRITE_HEIGHT, color)
-    sprite = pygame.transform.scale(sprite, (constants.TILE_SCALE, constants.TILE_SCALE))
+    sprite = pygame.transform.scale(sprite, (settings.TILE_SCALE, settings.TILE_SCALE))
     return sprite
 def text(x, y):
     '''Automatically loads the image at the specified sprite coordinate.
     Scales for the half-width of text images.
     For x=1, y=1, will load image at x=8px, y=16px.'''
     sprite = get_sprite(x, y, TEXT_WIDTH, TEXT_HEIGHT)
-    sprite = pygame.transform.scale(sprite, (constants.TILE_SCALE // 2, constants.TILE_SCALE))
+    sprite = pygame.transform.scale(sprite, (settings.TILE_SCALE // 2, settings.TILE_SCALE))
     return sprite
 
 def set_color(sprite, color):
