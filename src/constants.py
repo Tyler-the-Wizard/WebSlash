@@ -4,6 +4,7 @@ FPS = 60
 
 # Converts between tile index and actual tile coordinates.
 TILE_DICT = [(i + 1, 26) for i in range(17)]
+TILE_DICT[0] = (15, 6)
 
 # Color enum for colors.py
 C_BG = 0
@@ -33,6 +34,7 @@ CL_WATER = 2
 # replace on the spritesheet
 SPRITE_BG_COLOR = pygame.Color(17, 17, 51)
 SPRITE_FG_COLOR = pygame.Color(238, 238, 204)
+SPRITE_EMPTY_FG_COLOR = pygame.Color(51, 51, 85)
 
 # 0-1. lower number means lazier camera
 CAMERA_SHARPNESS = 0.14

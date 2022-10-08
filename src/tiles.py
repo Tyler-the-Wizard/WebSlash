@@ -25,14 +25,27 @@ class Tilemap:
             new_row = []
             for i in row:
                 (x, y) = constants.TILE_DICT[i]
-                new_tile = Tile(
-                    spriteloader.sprite(
-                        x, y,
-                        colors.palette_color(constants.C_LIGHT_GRAY)
-                    ),
-                constants.CL_NONE if i == 0 else constants.CL_WALL,
-                False if i == 0 else True
-                )
+
+                new_tile = None
+                if i == 0:
+                    new_tile = Tile(
+                        spriteloader.sprite(
+                            x, y,
+                            colors.palette_color(constants.C_GRAY),
+                            constants.SPRITE_EMPTY_FG_COLOR
+                        ),
+                        constants.CL_NONE,
+                        False
+                    )
+                else:
+                    new_tile = Tile(
+                        spriteloader.sprite(
+                            x, y,
+                            colors.palette_color(constants.C_LIGHT_GRAY)
+                        ),
+                        constants.CL_WALL,
+                        True
+                    )
 
                 new_row.append(new_tile)
             self.tiles.append(new_row)

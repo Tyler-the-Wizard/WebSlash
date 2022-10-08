@@ -32,9 +32,9 @@ settings.GAME.current_level = 0
 # TEST CODE
 player.make_player(9, 9)
 
-monsters.factory('goblin', 10, 10)
-monsters.factory('golem', 11, 10)
-monsters.factory('snake', 12, 10)
+#monsters.factory('goblin', 10, 10)
+#monsters.factory('golem', 11, 10)
+#monsters.factory('snake', 12, 10)
 
 # Main game loop
 while settings.DO_MAIN_LOOP:
