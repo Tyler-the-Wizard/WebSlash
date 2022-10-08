@@ -32,11 +32,16 @@ def load(filename, depth=0) -> Level:
     # Get rid of empty lines in the file
     rows = [row for row in data.split('\n') if len(row) > 0]
 
-    tilemap = tiles.Tilemap([[int(cell) for cell in row.split(' ')] for row in rows])
+    tile_array = [[int(cell) for cell in row.split(' ')] for row in rows]
+    # Hack to rotate the tile array
+    tile_array = list(zip(*tile_array))
+    tilemap = tiles.Tilemap(tile_array)
+
     return Level(tilemap, [], [], depth)
 
 def save(level, filename) -> None:
     '''Saves a level into a file.'''
+    # TODO This function will not work with current Tilemap class
     data = '\n'.join([' '.join([str(cell) for cell in row]) for row in level.tilemap])
 
     file = open(filename, 'w')
