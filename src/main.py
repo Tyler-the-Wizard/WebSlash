@@ -30,7 +30,7 @@ settings.GAME.new_level()
 settings.GAME.current_level = 0
 
 # TEST CODE
-player.make_player(1, 1)
+player.make_player(9, 9)
 
 monsters.factory('goblin', 10, 10)
 monsters.factory('golem', 11, 10)

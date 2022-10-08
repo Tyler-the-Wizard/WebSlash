@@ -54,10 +54,10 @@ class Shadow_Line:
     def is_full_shadow(self):
         return (len(self.shadows) == 1
         and self.shadows[0].start == 0
-        and self.shadows[0].end == 0)
+        and self.shadows[0].end == 1)
 
 class Shadow:
-    def __init__(self, start: int, end: int):
+    def __init__(self, start, end):
         self.start = start
         self.end = end
 
@@ -71,9 +71,9 @@ class Shadow:
 def project_tile(row, col) -> Shadow:
     '''Creates a Shadow that corresponds to the
     projected silhouette of the tile at row, col.'''
-    topLeft = col / (row + 2)
-    bottomRight = (col + 1) / (row + 1)
-    return Shadow(topLeft, bottomRight)
+    top_left = col / (row + 2)
+    bottom_right = (col + 1) / (row + 1)
+    return Shadow(top_left, bottom_right)
 
 class Point:
     '''Helper class to assist with octant transformations'''
@@ -90,11 +90,11 @@ def refresh_visibility(player_x, player_y):
 
 def refresh_octant(player_pos, octant):
     line = Shadow_Line()
-    full_shadow = False
     tiles = settings.GAME.get_current_level().tilemap.tiles
 
-    row = 1
+    row = 0
     while True:
+        row += 1
         # Stop once we go out of bounds.
         pos = player_pos + transform_octant(row, 0, octant)
         if not is_in_bounds(pos):
@@ -107,21 +107,15 @@ def refresh_octant(player_pos, octant):
             if not is_in_bounds(pos):
                 break
 
-            if full_shadow:
-                tiles[pos.x][pos.y].set_visibility(False)
-            else:
-                projection = project_tile(row, col)
+            projection = project_tile(row, col)
 
-                # Set the visibility of this tile.
-                visible = not line.is_in_shadow(projection)
-                tiles[pos.x][pos.y].set_visibility(visible)
+            # Set the visibility of this tile.
+            visible = not line.is_in_shadow(projection)
+            tiles[pos.x][pos.y].set_visibility(visible)
 
-                # Add any opaque tiles to the shadow map.
-                if visible and tiles[pos.x][pos.y].blocks_sight:
-                    line.add(projection)
-                    full_shadow = line.is_full_shadow
-
-        row += 1
+            # Add any opaque tiles to the shadow map.
+            if visible and tiles[pos.x][pos.y].blocks_sight:
+                line.add(projection)
 
 def is_in_bounds(point):
     bounds = settings.GAME.get_current_level().tilemap.size
