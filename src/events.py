@@ -1,5 +1,6 @@
 import pygame
 import settings
+import spriteloader
 
 def player_move(dx, dy):
     '''Convenience function for player movement'''
@@ -47,3 +48,7 @@ def handle_events(events):
             # Holding still for a turn
             if event.key == pygame.K_x:
                 do_turn()
+
+            # Bow easter egg
+            if event.key == pygame.K_b:
+                spriteloader.add_bow_to_sprite(settings.PLAYER.sprite)

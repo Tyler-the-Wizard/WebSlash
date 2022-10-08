@@ -37,3 +37,8 @@ def set_color(sprite, color, fg_color):
     sprite.set_colorkey(fg_color)
     new_sprite.blit(sprite, (0, 0))
     return new_sprite
+
+def add_bow_to_sprite(sprite):
+    bow = pygame.image.load('assets/bow.png').convert_alpha()
+    bow = pygame.transform.scale(bow, (settings.TILE_SCALE // 4, settings.TILE_SCALE // 4))
+    sprite.blit(bow, (settings.TILE_SCALE * 0.6, settings.TILE_SCALE * 0.12))

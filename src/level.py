@@ -21,8 +21,6 @@ class Level:
         for monster in self.monsters:
             monster.draw(surface, camera)
 
-# TODO Level file format needs to include monsters, items, depth, name? in the file
-
 def load(filename, depth=0) -> Level:
     '''Loads a level from a file.'''
     file = open(filename)
