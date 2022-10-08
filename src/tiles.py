@@ -4,8 +4,9 @@ import settings
 import spriteloader
 
 class Tile:
-    def __init__(self, sprite, collision, blocks_sight) -> None:
+    def __init__(self, sprite, sprite_remembered, collision, blocks_sight) -> None:
         self.sprite = sprite
+        self.sprite_remembered = sprite_remembered
         self.collision = collision
         self.blocks_sight = blocks_sight
         self.is_visible = False
@@ -31,6 +32,11 @@ class Tilemap:
                     new_tile = Tile(
                         spriteloader.sprite(
                             x, y,
+                            colors.palette_color(constants.C_LIGHT_GRAY),
+                            constants.SPRITE_EMPTY_FG_COLOR
+                        ),
+                        spriteloader.sprite(
+                            x, y,
                             colors.palette_color(constants.C_GRAY),
                             constants.SPRITE_EMPTY_FG_COLOR
                         ),
@@ -42,6 +48,10 @@ class Tilemap:
                         spriteloader.sprite(
                             x, y,
                             colors.palette_color(constants.C_LIGHT_GRAY)
+                        ),
+                        spriteloader.sprite(
+                            x, y,
+                            colors.palette_color(constants.C_GRAY)
                         ),
                         constants.CL_WALL,
                         True
@@ -56,7 +66,8 @@ class Tilemap:
         for x, row in enumerate(self.tiles):
             for y, tile in enumerate(row):
                 if tile.seen:
+                    sprite = tile.is_visible and tile.sprite or tile.sprite_remembered
                     surface.blit(
-                        tile.sprite,
+                        sprite,
                         (x * settings.TILE_SCALE - camera[0], y * settings.TILE_SCALE - camera[1])
                     )
