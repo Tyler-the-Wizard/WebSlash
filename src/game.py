@@ -1,4 +1,5 @@
 import level
+import level_generator
 
 class Game:
     '''A Game object contains all information that describes
@@ -17,7 +18,24 @@ class Game:
     
     def new_level(self):
         # Test code for now. Will change later
-        lvl = level.load('levels/save_test.dat')
+        big_config = level_generator.Generator_Configuration(
+            200,
+            100,
+            400,
+            11,
+            3
+        )
+
+        config = level_generator.Generator_Configuration(
+            200,
+            100,
+            200,
+            11,
+            3
+        )
+
+        level_generator.generate_standard(config, 'levels/generated.dat')
+        lvl = level.load('levels/generated.dat')
         self.levels.append(lvl)
 
     def save_level(self):
