@@ -26,10 +26,14 @@ class Tilemap:
 
             new_row = []
             for attr_string in row:
+                if len(attr_string) == 0:
+                    continue
+
                 attrs = attr_string.split(',')
                 i = int(attrs[0])
                 collision = int(attrs[1])
-                blocks_sight = int(attrs[2])
+                blocks_sight = bool(int(attrs[2]))
+                seen = bool(int(attrs[3]))
 
                 (x, y) = constants.TILE_DICT[i]
 
@@ -52,10 +56,13 @@ class Tilemap:
                     blocks_sight
                 )
 
+                new_tile.sprite_index = i
+                new_tile.seen = seen
                 new_row.append(new_tile)
-            self.tiles.append(new_row)
+            if len(new_row) > 0:
+                self.tiles.append(new_row)
 
-        self.size = (len(tiles), len(tiles[0]))
+        self.size = (len(self.tiles), len(self.tiles[0]))
     
     def draw(self, surface, camera=(0,0)):
         for x, row in enumerate(self.tiles):

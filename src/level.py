@@ -24,7 +24,7 @@ class Level:
 
 # Loading and saving of Levels
 
-def load_tilemap(rows, loaded_data):
+def load_tilemap(rows, level_data):
     tile_array = [row.split(' ') for row in rows]
     # Remove empty lines
     tile_array = [row for row in tile_array if len(row) > 1 and row[0] != '']
@@ -32,13 +32,26 @@ def load_tilemap(rows, loaded_data):
     tile_array = list(zip(*tile_array))
     tilemap = tiles.Tilemap(tile_array)
 
-    loaded_data['tilemap'] = tilemap
+    level_data['tilemap'] = tilemap
 
-def save_tilemap():
-    return ''
+def save_tilemap(level_data):
+    return_string = ''
+    tiles = level_data['tilemap'].tiles
+    for row in tiles:
+        for tile in row:
+            tile_data = f'\
+                {tile.sprite_index}\
+                {tile.collision}\
+                {tile.blocks_sight and 1 or 0}\
+                {tile.seen and 1 or 0}\
+            '
+            return_string += ','.join(tile_data.split()) + ' '
+        return_string += '\n'
 
-def load_monsters(rows, loaded_data):
-    loaded_data['monsters'] = []
+    return return_string
+
+def load_monsters(rows, level_data):
+    level_data['monsters'] = []
     for row in rows:
         if len(row) > 0:
             attrs = row.split(' ')
@@ -47,27 +60,59 @@ def load_monsters(rows, loaded_data):
                 int(attrs[1]),
                 int(attrs[2])
             )
-            loaded_data['monsters'].append(mon)
 
-def save_monsters():
-    return ''
+            # Check to see if there is extra data on this monster
+            if len(attrs) > 3:
+                mon.display_name = attrs[3]
+                mon.speed = int(attrs[4])
+                mon.max_hp = int(attrs[5])
+                mon.hp = int(attrs[6])
+                mon.collision = int(attrs[7])
+                mon.turn_count = float(attrs[8])
 
-def load_items(rows, loaded_data):
+            level_data['monsters'].append(mon)
+
+def save_monsters(level_data):
+    return_string = ''
+    for mon in level_data['monsters']:
+        if mon.mon_name == 'player':
+            continue
+
+        mon_data = f'\
+            {mon.mon_name}\
+            {mon.x}\
+            {mon.y}\
+            {mon.display_name}\
+            {mon.speed}\
+            {mon.max_hp}\
+            {mon.hp}\
+            {mon.collision}\
+            {mon.turn_count}\
+        '
+        return_string += ' '.join(mon_data.split()) + '\n'
+
+    return return_string
+
+def load_items(rows, level_data):
     pass
 
-def save_items():
+def save_items(level_data):
     return ''
 
-def load_info(rows, loaded_data):
-    loaded_data['info'] = {}
+def load_info(rows, level_data):
+    level_data['info'] = {}
     for row in rows:
         if len(row) > 0:
             kv = row.split(' ')
             if kv[0] == 'depth':
-                loaded_data['info']['depth'] = int(kv[1])
+                level_data['info']['depth'] = int(kv[1])
 
-def save_info():
-    return ''
+def save_info(level_data):
+    return_string = ''
+    for key in level_data['info'].keys():
+        return_string += key + ' ' + str(level_data['info'][key])
+
+    return return_string
 
 file_format_dict = {
     'TILEMAP': (load_tilemap, save_tilemap),
@@ -83,23 +128,35 @@ def load(filename) -> Level:
     file.close()
 
     # Separate by section
-    loaded_data = {}
+    level_data = {}
     for section in data.split('!'):
         rows = section.split('\n')
         if rows[0] in file_format_dict.keys():
-            file_format_dict[rows[0]][0](rows[1:], loaded_data)
+            file_format_dict[rows[0]][0](rows[1:], level_data)
 
     return Level(
-        loaded_data['tilemap'],
+        level_data['tilemap'],
         [],
-        loaded_data['monsters'],
-        loaded_data['info']['depth']
+        level_data['monsters'],
+        level_data['info']['depth']
     )
 
 def save(level, filename) -> None:
     '''Saves a level into a file.'''
-    # TODO This function will not work with current Tilemap class
-    data = '\n'.join([' '.join([str(cell) for cell in row]) for row in level.tilemap])
+    data = ''
+    level_data = {
+        'tilemap': level.tilemap,
+        'items': level.items,
+        'monsters': level.monsters,
+        'info': {
+            'depth': level.depth
+        }
+    }
+
+    for section_name in file_format_dict.keys():
+        data += '!' + section_name + '\n'
+        data += file_format_dict[section_name][1](level_data)
+        data += '\n'
 
     file = open(filename, 'w')
     file.write(data)

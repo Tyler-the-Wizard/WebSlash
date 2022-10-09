@@ -55,6 +55,7 @@ class Monster:
         things like moving towards the player,
         attacking, and fleeing.'''
         self.turn_count += self.speed / settings.PLAYER.speed * (random() + 0.5)
+        self.turn_count = round(self.turn_count, 3)
         while self.turn_count >= 1:
             self.turn_count -= 1
             do_move = True

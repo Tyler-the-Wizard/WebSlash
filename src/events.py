@@ -25,30 +25,35 @@ def handle_events(events):
             settings.DO_MAIN_LOOP = False
         
         if event.type == pygame.KEYDOWN:
-            # Standard movement
-            if event.key == pygame.K_w:
-                player_move(0, -1)
-            if event.key == pygame.K_s:
-                player_move(0, 1)
-            if event.key == pygame.K_a:
-                player_move(-1, 0)
-            if event.key == pygame.K_d:
-                player_move(1, 0)
+            # Handle ctrl keys
+            if pygame.key.get_mods() & pygame.KMOD_CTRL:
+                if event.key == pygame.K_s:
+                    settings.GAME.save_level()
+                # Bow easter egg
+                if event.key == pygame.K_b:
+                    spriteloader.add_bow_to_sprite(settings.PLAYER.sprite)
 
-            # Diagonal movement
-            if event.key == pygame.K_q:
-                player_move(-1, -1)
-            if event.key == pygame.K_e:
-                player_move(1, -1)
-            if event.key == pygame.K_z:
-                player_move(-1, 1)
-            if event.key == pygame.K_c:
-                player_move(1, 1)
-            
-            # Holding still for a turn
-            if event.key == pygame.K_x:
-                do_turn()
+            else:
+                # Standard movement
+                if event.key == pygame.K_w:
+                    player_move(0, -1)
+                if event.key == pygame.K_s:
+                    player_move(0, 1)
+                if event.key == pygame.K_a:
+                    player_move(-1, 0)
+                if event.key == pygame.K_d:
+                    player_move(1, 0)
 
-            # Bow easter egg
-            if event.key == pygame.K_b:
-                spriteloader.add_bow_to_sprite(settings.PLAYER.sprite)
+                # Diagonal movement
+                if event.key == pygame.K_q:
+                    player_move(-1, -1)
+                if event.key == pygame.K_e:
+                    player_move(1, -1)
+                if event.key == pygame.K_z:
+                    player_move(-1, 1)
+                if event.key == pygame.K_c:
+                    player_move(1, 1)
+                
+                # Holding still for a turn
+                if event.key == pygame.K_x:
+                    do_turn()
