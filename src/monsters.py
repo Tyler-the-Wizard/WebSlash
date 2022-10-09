@@ -5,6 +5,7 @@ import settings
 from spriteloader import sprite
 
 def factory(mon_name, x, y):
+    '''Creates a monster and returns it.'''
     if mon_name not in mon_lib:
         print(f'monsters.py: monster \'{mon_name}\' not found!')
         mon_name = 'unknown'
@@ -12,7 +13,6 @@ def factory(mon_name, x, y):
     args = mon_lib[mon_name]
 
     mon = Monster(mon_name, x, y, *args)
-    settings.GAME.get_current_level().monsters.append(mon)
     return mon
 
 mon_lib = {
@@ -23,6 +23,11 @@ mon_lib = {
     'golem' : ['golem', 30, 50, constants.CL_NONE, sprite(9, 23, color(constants.C_GRAY))],
     'snake' : ['snake', 180, 5, constants.CL_NONE, sprite(8, 14, color(constants.C_CYAN))],
 }
+
+def add_to_level(mon_name, x, y):
+    '''Creates a monster on the current level'''
+    mon = factory(mon_name, x, y)
+    settings.GAME.get_current_level().monsters.append(mon)
 
 class Monster:
     def __init__(self, mon_name, x, y, display_name, speed, hp, collision, sprite) -> None:

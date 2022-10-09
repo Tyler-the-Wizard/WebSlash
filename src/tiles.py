@@ -20,42 +20,37 @@ class Tile:
 class Tilemap:
     '''A 2D grid of tiles.'''
     def __init__(self, tiles) -> None:
-        '''tiles is a 2D array of ints. (see constants.TILE_DICT)'''
+        '''tiles is a 2D array of intstrings. index,collision,blocks_sight.'''
         self.tiles = []
         for row in tiles:
+
             new_row = []
-            for i in row:
+            for attr_string in row:
+                attrs = attr_string.split(',')
+                i = int(attrs[0])
+                collision = int(attrs[1])
+                blocks_sight = int(attrs[2])
+
                 (x, y) = constants.TILE_DICT[i]
 
-                new_tile = None
+                fg_color = constants.SPRITE_FG_COLOR
                 if i == 0:
-                    new_tile = Tile(
-                        spriteloader.sprite(
-                            x, y,
-                            colors.palette_color(constants.C_LIGHT_GRAY),
-                            constants.SPRITE_EMPTY_FG_COLOR
-                        ),
-                        spriteloader.sprite(
-                            x, y,
-                            colors.palette_color(constants.C_GRAY),
-                            constants.SPRITE_EMPTY_FG_COLOR
-                        ),
-                        constants.CL_NONE,
-                        False
-                    )
-                else:
-                    new_tile = Tile(
-                        spriteloader.sprite(
-                            x, y,
-                            colors.palette_color(constants.C_LIGHT_GRAY)
-                        ),
-                        spriteloader.sprite(
-                            x, y,
-                            colors.palette_color(constants.C_GRAY)
-                        ),
-                        constants.CL_WALL,
-                        True
-                    )
+                    fg_color = constants.SPRITE_EMPTY_FG_COLOR
+
+                new_tile = Tile(
+                    spriteloader.sprite(
+                        x, y,
+                        colors.palette_color(constants.C_LIGHT_GRAY),
+                        fg_color
+                    ),
+                    spriteloader.sprite(
+                        x, y,
+                        colors.palette_color(constants.C_GRAY),
+                        fg_color
+                    ),
+                    collision,
+                    blocks_sight
+                )
 
                 new_row.append(new_tile)
             self.tiles.append(new_row)

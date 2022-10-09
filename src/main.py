@@ -29,12 +29,11 @@ settings.GAME = game.Game()
 settings.GAME.new_level()
 settings.GAME.current_level = 0
 
-# TEST CODE
-player.make_player(9, 9)
-
-#monsters.factory('goblin', 10, 10)
-#monsters.factory('golem', 11, 10)
-#monsters.factory('snake', 12, 10)
+player_start_x = 1
+player_start_y = 1
+settings.GAME.get_current_level().monsters.append(
+    player.make_player(player_start_x, player_start_y)
+)
 
 # Main game loop
 while settings.DO_MAIN_LOOP:
