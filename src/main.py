@@ -29,8 +29,8 @@ settings.GAME = game.Game()
 settings.GAME.new_level()
 settings.GAME.current_level = 0
 
-player_start_x = 1
-player_start_y = 1
+player_start_x = 10
+player_start_y = 10
 settings.GAME.get_current_level().monsters.append(
     player.make_player(player_start_x, player_start_y)
 )

@@ -1,12 +1,13 @@
 from random import choice, randint
 
 class Generator_Configuration:
-    def __init__(self, width, height, num_room_tries, max_room_size, min_room_size):
+    def __init__(self, width, height, num_room_tries, max_room_size, min_room_size, extra_connectors_rarity):
             self.width = width
             self.height = height
             self.num_room_tries = num_room_tries
             self.max_room_size = max_room_size
             self.min_room_size = min_room_size
+            self.extra_connectors_rarity = extra_connectors_rarity
 
             if self.width % 2 == 0:
                 self.width -= 1
@@ -26,6 +27,18 @@ class Maze_Tile:
 # 1 = right
 # 2 = down
 # 3 = left
+def go_dir(x, y, direction):
+    match direction:
+        case 0:
+            y -= 1
+        case 1:
+            x += 1
+        case 2:
+            y += 1
+        case 3:
+            x -= 1
+    return x, y
+
 class Maze:
     def __init__(self, width, height, new_level):
         self.maze_array = [[Maze_Tile() for _ in range(width)] for _ in range(height)]
@@ -44,17 +57,11 @@ class Maze:
             and x < len(self.maze_array[y]))
 
     def can_carve(self, x, y, direction):
-        match direction:
-            case 0:
-                y -= 2
-            case 1:
-                x += 2
-            case 2:
-                y += 2
-            case 3:
-                x -= 2
+        x, y = go_dir(x, y, direction)
+        x, y = go_dir(x, y, direction)
         if (self.is_in_bounds(x, y)):
             return self.maze_array[y][x].is_carveable
+        return False
 
     def get_carve_dirs(self, x, y):
         '''Returns a list of directions (numbers
@@ -78,15 +85,7 @@ class Maze:
         self.set_carveability(x, y, False)
         self.new_level[y][x] = 0
 
-        match direction:
-            case 0:
-                y -= 1
-            case 1:
-                x += 1
-            case 2:
-                y += 1
-            case 3:
-                x -= 1
+        x, y = go_dir(x, y, direction)
 
         self.set_carveability(x+1, y, False)
         self.set_carveability(x-1, y, False)
@@ -95,15 +94,7 @@ class Maze:
         self.set_carveability(x, y, False)
         self.new_level[y][x] = 0
 
-        match direction:
-            case 0:
-                y -= 1
-            case 1:
-                x += 1
-            case 2:
-                y += 1
-            case 3:
-                x -= 1
+        x, y = go_dir(x, y, direction)
 
         self.set_carveability(x+1, y, False)
         self.set_carveability(x-1, y, False)
@@ -111,6 +102,27 @@ class Maze:
         self.set_carveability(x, y-1, False)
         self.set_carveability(x, y, False)
         self.new_level[y][x] = 0
+
+def dead_end_check(x, y, new_level):
+    '''Helper function to get rid of dead ends'''
+    # Is this tile surrounded on exactly 3 sides?
+    surroundings = []
+    if new_level[y+1][x] == 0:
+        surroundings.append((x, y+1))
+    if new_level[y-1][x] == 0:
+        surroundings.append((x, y-1))
+    if new_level[y][x+1] == 0:
+        surroundings.append((x+1, y))
+    if new_level[y][x-1] == 0:
+        surroundings.append((x-1, y))
+
+    if len(surroundings) != 1:
+        return True
+
+    # Clean up this dead end
+    new_level[y][x] = 7
+    dead_end_check(surroundings[0][0], surroundings[0][1], new_level)
+    return False
 
 def generate_standard(config, filename):
     '''Generates a standard level. This
@@ -120,6 +132,9 @@ def generate_standard(config, filename):
 
     # Used later for making passages
     maze = Maze(config.width, config.height, new_level)
+
+    # Used to connect everything together
+    regions = []
 
     # Make rooms in the dungeon
     for _ in range(config.num_room_tries):
@@ -147,9 +162,12 @@ def generate_standard(config, filename):
             break
         else:
             # Room is valid, generate it!
+            new_room_region = []
             for row in range(room_x, room_x + room_width):
                 for col in range(room_y, room_y + room_height):
                     new_level[col][row] = 0
+                    new_room_region.append((row, col))
+            regions.append(new_room_region)
             # Mark the room and surrounding walls as uncarveable in our Maze
             for row in range(room_x - 1, room_x + room_width + 1):
                 for col in range(room_y - 1, room_y + room_height + 1):
@@ -163,6 +181,7 @@ def generate_standard(config, filename):
                 continue
 
             # Begin a recursive backtracking
+            new_maze_region = []
             maze.maze_array[y][x].is_carveable = False
             stack = [(x, y)]
 
@@ -178,18 +197,90 @@ def generate_standard(config, filename):
                     new_level[cur_y][cur_x] = 0
                     direction = choice(dirs)
                     maze.carve(cur_x, cur_y, direction)
-                    match direction:
-                        case 0:
-                            cur_y -= 2
-                        case 1:
-                            cur_x += 2
-                        case 2:
-                            cur_y += 2
-                        case 3:
-                            cur_x -= 2
+
+                    new_maze_region.append((cur_x, cur_y))
+                    cur_x, cur_y = go_dir(cur_x, cur_y, direction)
+                    new_maze_region.append((cur_x, cur_y))
+                    cur_x, cur_y = go_dir(cur_x, cur_y, direction)
+                    new_maze_region.append((cur_x, cur_y))
+
                     stack.append((cur_x, cur_y))
 
+            regions.append(new_maze_region)
 
+    # Unify all regions into one
+    for x in range(1,  config.width - 1):
+        for y in range(1, config.height - 1):
+            if new_level[y][x] == 0:
+                continue
+            
+            # Check if this tile is surrounded
+            # on exactly two sides
+            t_up = new_level[y - 1][x]
+            t_down = new_level[y + 1][x]
+            t_left = new_level[y][x - 1]
+            t_right = new_level[y][x + 1]
+
+            adj_tiles = (None, None)
+            if (t_up == 0 and t_down == 0
+            and t_left != 0 and t_right != 0):
+                adj_tiles = ((x-1, y), (x+1, y))
+
+            if (t_left == 0 and t_right == 0
+            and t_up != 0 and t_down != 0):
+                adj_tiles = ((x-1, y), (x+1, y))
+            
+            if adj_tiles == (None, None):
+                continue
+
+            # Check to see if the adjacent tiles
+            # belong to different regions
+            region_0_i = None
+            region_1_i = None
+            for i, region in enumerate(regions):
+                if adj_tiles[0] in region:
+                    region_0_i = i
+                if adj_tiles[1] in region:
+                    region_1_i = i
+                if region_0_i != None and region_1_i != None:
+                    break
+            else:
+                #print('WARNING: No region found for:')
+                #if region_0_i == None:
+                #    print(adj_tiles[0])
+                #if region_1_i == None:
+                #    print(adj_tiles[1])
+                continue
+            
+            if region_0_i == region_1_i:
+                # 1 in (x) chance to carve this connector anyway
+                if randint(1, config.extra_connectors_rarity) == 1:
+                    new_level[y][x] = 0
+                    regions[region_0_i].append((x, y))
+                continue
+
+            # They are from different regions.
+            # Carve the tile and merge regions
+            new_level[y][x] = 0
+            regions[region_0_i].append((x, y))
+            for tile in regions[region_1_i]:
+                regions[region_0_i].append(tile)
+            del regions[region_1_i]
+
+    # Remove dead ends from the maze
+    maze_has_dead_ends = True
+    while maze_has_dead_ends:
+        maze_has_dead_ends = False
+        for x in range(1,  config.width - 1):
+            for y in range(1, config.height - 1):
+                if new_level[y][x] != 0:
+                    continue
+
+                # Check this tile
+                tmp = dead_end_check(x, y, new_level)
+                if maze_has_dead_ends:
+                    maze_has_dead_ends = tmp
+                
     # Convert the new_level array to the tilemap format
     data = '!TILEMAP\n'
     for row in new_level:
@@ -206,6 +297,5 @@ def generate_standard(config, filename):
 def convert_to_tile(cell):
     if cell == 0:
         return '0,0,0,0'
-    elif cell == 7:
-        # TODO should be: return f'{cell},1,1,0'
-        return f'{cell},0,1,0'
+    else:
+        return f'{cell},1,1,0'

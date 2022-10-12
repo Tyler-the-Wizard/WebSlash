@@ -57,3 +57,7 @@ def handle_events(events):
                 # Holding still for a turn
                 if event.key == pygame.K_x:
                     do_turn()
+
+                # Debug print player pos
+                if event.key == pygame.K_p:
+                    print(f'p: {settings.PLAYER.x}, {settings.PLAYER.y}')

@@ -18,20 +18,13 @@ class Game:
     
     def new_level(self):
         # Test code for now. Will change later
-        big_config = level_generator.Generator_Configuration(
-            200,
-            100,
-            400,
-            11,
-            3
-        )
-
         config = level_generator.Generator_Configuration(
             200,
             100,
-            200,
+            1000,
             11,
-            3
+            3,
+            10
         )
 
         level_generator.generate_standard(config, 'levels/generated.dat')
