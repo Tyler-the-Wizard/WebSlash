@@ -1,3 +1,5 @@
+import zlib
+
 import monsters
 import tiles
 
@@ -123,8 +125,8 @@ file_format_dict = {
 
 def load(filename) -> Level:
     '''Loads a level from a file.'''
-    file = open(filename)
-    data = file.read()
+    file = open(filename, 'rb')
+    data = zlib.decompress(file.read()).decode()
     file.close()
 
     # Separate by section
@@ -158,6 +160,6 @@ def save(level, filename) -> None:
         data += file_format_dict[section_name][1](level_data)
         data += '\n'
 
-    file = open(filename, 'w')
-    file.write(data)
+    file = open(filename, 'wb')
+    file.write(zlib.compress(data.encode()))
     file.close()

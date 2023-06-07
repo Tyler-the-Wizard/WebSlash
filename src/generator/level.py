@@ -1,4 +1,5 @@
 from random import choice, randint
+import zlib
 
 class Generator_Configuration:
     def __init__(self, width, height, num_room_tries, max_room_size, min_room_size, extra_connectors_rarity):
@@ -290,8 +291,8 @@ def generate_standard(config, filename):
 
     data += '\n!MONSTERS\n\n!ITEMS\n\n!INFO\ndepth 0'
 
-    file = open(filename, 'w')
-    file.write(data)
+    file = open(filename, 'wb')
+    file.write(zlib.compress(data.encode()))
     file.close()
 
 def convert_to_tile(cell):
