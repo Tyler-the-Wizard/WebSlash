@@ -1,3 +1,4 @@
+from enum import Enum
 from random import choice, randint
 import zlib
 
@@ -125,7 +126,27 @@ def dead_end_check(x, y, new_level):
     dead_end_check(surroundings[0][0], surroundings[0][1], new_level)
     return False
 
-def generate_standard(config, filename):
+LevelType = Enum('LevelType', [
+    'PURE_MAZE',
+    'PURE_FEATURES',
+    'MAZE_AND_FEATURES',
+    'DUNGEON'])
+
+def factory(level_type, config, filename):
+    '''A function for generating levels.'''
+    match level_type:
+        case LevelType.PURE_MAZE:
+            level = generate_standard(config)
+        case LevelType.PURE_FEATURES:
+            pass
+        case LevelType.MAZE_AND_FEATURES:
+            pass
+        case LevelType.DUNGEON:
+            pass
+    
+    finalize(level, filename)
+
+def generate_standard(config):
     '''Generates a standard level. This
     function uses the algorithm found here:
     https://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/'''
@@ -281,10 +302,23 @@ def generate_standard(config, filename):
                 tmp = dead_end_check(x, y, new_level)
                 if maze_has_dead_ends:
                     maze_has_dead_ends = tmp
+    
+    return new_level
+
+def finalize(level, filename):
+    '''Converts the level to the format where it can
+    be written to a file, adds items and monsters
+    appropriate to depth, etc.'''
                 
-    # Convert the new_level array to the tilemap format
+    def convert_to_tile(cell):
+        if cell == 0:
+            return '0,0,0,0'
+        else:
+            return f'{cell},1,1,0'
+
+    # Convert the level array to the tilemap format
     data = '!TILEMAP\n'
-    for row in new_level:
+    for row in level:
         for cell in row:
             data += f'{convert_to_tile(cell)} '
         data += '\n'
@@ -294,9 +328,3 @@ def generate_standard(config, filename):
     file = open(filename, 'wb')
     file.write(zlib.compress(data.encode()))
     file.close()
-
-def convert_to_tile(cell):
-    if cell == 0:
-        return '0,0,0,0'
-    else:
-        return f'{cell},1,1,0'

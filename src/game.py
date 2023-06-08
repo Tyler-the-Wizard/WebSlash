@@ -19,16 +19,22 @@ class Game:
     def new_level(self):
         # Test code for now. Will change later
         config = level_gen.Generator_Configuration(
-            200,
-            100,
-            1000,
-            11,
-            3,
-            10
+            width=50,
+            height=30,
+            num_room_tries=1000,
+            max_room_size=11,
+            min_room_size=3,
+            extra_connectors_rarity=10
         )
 
-        level_gen.generate_standard(config, 'levels/generated.dat')
-        lvl = level.load('levels/generated.dat')
+        test_filename = 'levels/generated.dat'
+
+        level_gen.factory(
+            level_gen.LevelType.PURE_MAZE,
+            config,
+            test_filename)
+
+        lvl = level.load(test_filename)
         self.levels.append(lvl)
 
     def save_level(self):
