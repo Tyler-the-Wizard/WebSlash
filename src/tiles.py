@@ -63,7 +63,7 @@ class Tilemap:
                 self.tiles.append(new_row)
 
         self.size = (len(self.tiles), len(self.tiles[0]))
-    
+
     def draw(self, surface, camera=(0,0)):
         for x, row in enumerate(self.tiles):
             for y, tile in enumerate(row):

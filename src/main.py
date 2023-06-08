@@ -41,7 +41,7 @@ while settings.DO_MAIN_LOOP:
     screen.fill(colors.palette_color(constants.C_BG))
 
     settings.CURRENT_DRAW_CONTEXT(screen)
-    
+
     pygame.display.flip()
     fps_clock.tick(constants.FPS)
 

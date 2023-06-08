@@ -13,7 +13,7 @@ class Shadow_Line:
             if shadow.contains(projection):
                 return True
         return False
-    
+
     def add(self, shadow) -> None:
         # Figure out where to slot the new shadow in the list.
         index = 0

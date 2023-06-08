@@ -45,10 +45,10 @@ class Monster:
 
         # Used to keep track of when this monster can move
         self.turn_count = 0.0
-    
+
     def draw(self, surface, camera=(0, 0)):
         surface.blit(self.sprite, (self.x * settings.TILE_SCALE - camera[0], self.y * settings.TILE_SCALE - camera[1]))
-    
+
     def do_turn(self):
         '''This function is called whenever this
         monster takes its turn. It includes
@@ -89,7 +89,7 @@ class Monster:
                 if do_move:
                     # If we can't attack, try to move
                     do_move = not self.try_move(self.x + dx, self.y + dy)
-    
+
     def can_move(self, x, y):
         '''Returns true if this monster's collision
         allows it to validly move to the x, y position.'''
@@ -99,7 +99,7 @@ class Monster:
 
         tile_collision = level.tilemap.tiles[x][y].collision
         return tile_collision == tile_collision & self.collision
-    
+
     def move(self, x, y):
         '''Moves the monster to the x, y position.
         This function can move the monster to an
@@ -115,14 +115,14 @@ class Monster:
             self.move(x, y)
 
         return can_move
-    
+
     def take_damage(self, amount):
         '''Causes this monster to take some damage.'''
         self.hp -= amount
         if self.hp <= 0:
             self.hp = 0
             self.die()
-    
+
     def die(self):
         '''This function is called when this monster dies.'''
         if self == settings.PLAYER:

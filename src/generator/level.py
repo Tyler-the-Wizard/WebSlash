@@ -143,7 +143,7 @@ def factory(level_type, config, filename):
             pass
         case LevelType.DUNGEON:
             pass
-    
+
     finalize(level, filename)
 
 def generate_standard(config):
@@ -235,7 +235,7 @@ def generate_standard(config):
         for y in range(1, config.height - 1):
             if new_level[y][x] == 0:
                 continue
-            
+
             # Check if this tile is surrounded
             # on exactly two sides
             t_up = new_level[y - 1][x]
@@ -251,7 +251,7 @@ def generate_standard(config):
             if (t_left == 0 and t_right == 0
             and t_up != 0 and t_down != 0):
                 adj_tiles = ((x-1, y), (x+1, y))
-            
+
             if adj_tiles == (None, None):
                 continue
 
@@ -273,7 +273,7 @@ def generate_standard(config):
                 #if region_1_i == None:
                 #    print(adj_tiles[1])
                 continue
-            
+
             if region_0_i == region_1_i:
                 # 1 in (x) chance to carve this connector anyway
                 if randint(1, config.extra_connectors_rarity) == 1:
@@ -302,14 +302,14 @@ def generate_standard(config):
                 tmp = dead_end_check(x, y, new_level)
                 if maze_has_dead_ends:
                     maze_has_dead_ends = tmp
-    
+
     return new_level
 
 def finalize(level, filename):
     '''Converts the level to the format where it can
     be written to a file, adds items and monsters
     appropriate to depth, etc.'''
-                
+
     def convert_to_tile(cell):
         if cell == 0:
             return '0,0,0,0'

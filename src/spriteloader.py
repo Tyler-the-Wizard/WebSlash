@@ -8,7 +8,7 @@ TEXT_WIDTH = SPRITE_WIDTH // 2
 TEXT_HEIGHT = SPRITE_HEIGHT
 
 sheet = pygame.image.load('assets/sprites.png').convert_alpha()
-    
+
 def get_sprite(x, y, width, height, color, fg_color):
     rect = pygame.Rect(x * width, y * height, width, height)
     surf = pygame.Surface(rect.size).convert()
