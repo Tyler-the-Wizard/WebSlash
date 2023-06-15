@@ -23,6 +23,7 @@ import events
 import game
 import monsters
 import player
+import text
 
 # TODO implement saving and loading of Games
 settings.GAME = game.Game()
@@ -52,6 +53,9 @@ while settings.DO_MAIN_LOOP:
     surf_game.fill(colors.palette_color(constants.C_BG))
     surf_stat.fill(colors.palette_color(constants.C_BG))
     surf_inv.fill(colors.palette_color(constants.C_BG))
+
+    # Test message
+    text.write(surf_info, 0, 0, 'HELLO')
 
     settings.CURRENT_DRAW_CONTEXT(surf_game)
 

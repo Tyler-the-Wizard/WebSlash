@@ -23,11 +23,12 @@ def sprite(x, y, color, fg_color=constants.SPRITE_FG_COLOR):
     sprite = get_sprite(x, y, SPRITE_WIDTH, SPRITE_HEIGHT, color, fg_color)
     sprite = pygame.transform.scale(sprite, (settings.TILE_SCALE, settings.TILE_SCALE))
     return sprite
-def text(x, y):
+
+def text(x, y, color, fg_color=constants.SPRITE_FG_COLOR):
     '''Automatically loads the image at the specified sprite coordinate.
     Scales for the half-width of text images.
     For x=1, y=1, will load image at x=8px, y=16px.'''
-    sprite = get_sprite(x, y, TEXT_WIDTH, TEXT_HEIGHT)
+    sprite = get_sprite(x, y, TEXT_WIDTH, TEXT_HEIGHT, color, fg_color)
     sprite = pygame.transform.scale(sprite, (settings.TILE_SCALE // 2, settings.TILE_SCALE))
     return sprite
 
