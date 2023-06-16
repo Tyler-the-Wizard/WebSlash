@@ -54,8 +54,10 @@ while settings.DO_MAIN_LOOP:
     surf_stat.fill(colors.palette_color(constants.C_BG))
     surf_inv.fill(colors.palette_color(constants.C_BG))
 
-    # Test message
-    text.write(surf_info, 0, 0, 'HELLO')
+    # Test messages
+    text.write(surf_info, 0, 0, 'Hello World!', scale=50, color=colors.palette_color(constants.C_GREEN))
+    text.write(surf_info, 0, 40, 'We got like 1581289 different colors!!! \'w\' :D @#@', scale=50, color=colors.palette_color(constants.C_RED))
+    text.write(surf_info, 0, 80, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 #%&@$.,!?:;\'"()[]*/\\+-<=>', scale=40, color=colors.palette_color(constants.C_CYAN))
 
     settings.CURRENT_DRAW_CONTEXT(surf_game)
 

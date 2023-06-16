@@ -9,12 +9,14 @@ TEXT_HEIGHT = SPRITE_HEIGHT
 
 sheet = pygame.image.load('assets/sprites.png').convert_alpha()
 
-def get_sprite(x, y, width, height, color, fg_color):
+def get_sprite(x, y, width, height, color=None, fg_color=None):
     rect = pygame.Rect(x * width, y * height, width, height)
     surf = pygame.Surface(rect.size).convert()
     surf.blit(sheet, (0, 0), rect)
-    surf = set_color(surf, color, fg_color)
-    surf.set_colorkey(constants.SPRITE_BG_COLOR, pygame.RLEACCEL)
+
+    if color is not None and fg_color is not None:
+        surf = set_color(surf, color, fg_color)
+
     return surf
 
 def sprite(x, y, color, fg_color=constants.SPRITE_FG_COLOR):
@@ -24,12 +26,11 @@ def sprite(x, y, color, fg_color=constants.SPRITE_FG_COLOR):
     sprite = pygame.transform.scale(sprite, (settings.TILE_SCALE, settings.TILE_SCALE))
     return sprite
 
-def text(x, y, color, fg_color=constants.SPRITE_FG_COLOR):
+def text(x, y):
     '''Automatically loads the image at the specified sprite coordinate.
     Scales for the half-width of text images.
     For x=1, y=1, will load image at x=8px, y=16px.'''
-    sprite = get_sprite(x, y, TEXT_WIDTH, TEXT_HEIGHT, color, fg_color)
-    sprite = pygame.transform.scale(sprite, (settings.TILE_SCALE // 2, settings.TILE_SCALE))
+    sprite = get_sprite(x, y, TEXT_WIDTH, TEXT_HEIGHT)
     return sprite
 
 def set_color(sprite, color, fg_color):
@@ -37,6 +38,7 @@ def set_color(sprite, color, fg_color):
     new_sprite.fill(color)
     sprite.set_colorkey(fg_color)
     new_sprite.blit(sprite, (0, 0))
+    new_sprite.set_colorkey(constants.SPRITE_BG_COLOR, pygame.RLEACCEL)
     return new_sprite
 
 def add_bow_to_sprite(sprite):
