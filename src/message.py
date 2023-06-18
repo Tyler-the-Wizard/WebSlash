@@ -25,8 +25,8 @@ def draw(surface):
     global offset
     height = surface.get_height()
     for i, message in enumerate(messages):
-        # Hilight the most recent message, all others should be dim
-        text_color = i == 0 and color(constants.C_FG) or color(constants.C_GRAY)
+        # Hilight the 2 most recent messages, all others should be dim
+        text_color = i <= 1 and color(constants.C_FG) or color(constants.C_GRAY)
         text.write(
             surface,
             0,
