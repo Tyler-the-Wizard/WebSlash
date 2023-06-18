@@ -1,5 +1,6 @@
 import random
 
+import colors
 from message import new as say
 import pygame
 import settings
@@ -68,3 +69,7 @@ def handle_events(events):
                 # Debug add new message
                 if event.key == pygame.K_m:
                     say('Message: ' + str(random.randint(1, 1000)))
+
+                # Debug change color palette
+                if event.key == pygame.K_r:
+                    colors.load_palette(1)
