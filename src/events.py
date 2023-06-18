@@ -1,3 +1,6 @@
+import random
+
+from message import new as say
 import pygame
 import settings
 import spriteloader
@@ -61,3 +64,7 @@ def handle_events(events):
                 # Debug print player pos
                 if event.key == pygame.K_p:
                     print(f'p: {settings.PLAYER.x}, {settings.PLAYER.y}')
+
+                # Debug add new message
+                if event.key == pygame.K_m:
+                    say('Message: ' + str(random.randint(1, 1000)))

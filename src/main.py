@@ -21,9 +21,9 @@ import colors
 import constants
 import events
 import game
+import message
 import monsters
 import player
-import text
 
 # TODO implement saving and loading of Games
 settings.GAME = game.Game()
@@ -54,11 +54,7 @@ while settings.DO_MAIN_LOOP:
     surf_stat.fill(colors.palette_color(constants.C_BG))
     surf_inv.fill(colors.palette_color(constants.C_BG))
 
-    # Test messages
-    text.write(surf_info, 0, 0, 'Hello World!', scale=50, color=colors.palette_color(constants.C_GREEN))
-    text.write(surf_info, 0, 40, 'We got like 1581289 different colors!!! \'w\' :D @#@', scale=50, color=colors.palette_color(constants.C_RED))
-    text.write(surf_info, 0, 80, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 #%&@$.,!?:;\'"()[]*/\\+-<=>', scale=40, color=colors.palette_color(constants.C_CYAN))
-
+    message.draw(surf_info)
     settings.CURRENT_DRAW_CONTEXT(surf_game)
 
     # Blit all surfaces and display
