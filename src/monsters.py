@@ -49,6 +49,8 @@ class Monster:
         # Used to keep track of when this monster can move
         self.turn_count = 0.0
 
+        self.regen = 10
+
     def draw(self, surface, camera=(0, 0)):
         surface.blit(self.sprite, (self.x * settings.TILE_SCALE - camera[0], self.y * settings.TILE_SCALE - camera[1]))
 
@@ -92,6 +94,10 @@ class Monster:
                 if do_move:
                     # If we can't attack, try to move
                     do_move = not self.try_move(self.x + dx, self.y + dy)
+
+    def do_regen(self):
+        if self.hp < self.max_hp and randint(1, self.regen) == 1:
+            self.hp += 1
 
     def can_move(self, x, y):
         '''Returns true if this monster's collision

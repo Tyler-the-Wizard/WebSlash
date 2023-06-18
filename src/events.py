@@ -15,11 +15,14 @@ def player_move(dx, dy):
         settings.PLAYER.x + dx,
         settings.PLAYER.y + dy
     ):
+        settings.PLAYER.turn_count += 1
         do_turn()
 
 def do_turn():
+    settings.PLAYER.do_regen()
     for mon in settings.GAME.get_current_level().monsters:
         if mon is not settings.PLAYER:
+            mon.do_regen()
             mon.do_turn()
     settings.PLAYER.refresh_visibility()
 
@@ -60,6 +63,8 @@ def handle_events(events):
 
                 # Holding still for a turn
                 if event.key == pygame.K_x:
+                    # player gets 2x regen when holding still
+                    settings.PLAYER.do_regen()
                     do_turn()
 
                 # Debug print player pos

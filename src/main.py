@@ -22,8 +22,8 @@ import constants
 import events
 import game
 import message
-import monsters
 import player
+import status
 
 # TODO implement saving and loading of Games
 settings.GAME = game.Game()
@@ -55,6 +55,7 @@ while settings.DO_MAIN_LOOP:
     surf_inv.fill(colors.palette_color(constants.C_BG))
 
     message.draw(surf_info)
+    status.draw(surf_stat)
     settings.CURRENT_DRAW_CONTEXT(surf_game)
 
     # Blit all surfaces and display

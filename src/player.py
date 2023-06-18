@@ -15,6 +15,8 @@ class Player(monsters.Monster):
 def make_player(x, y):
     player = monsters.factory('player', x, y)
     player.__class__ = Player
+    player.turn_count = 0
+
     settings.PLAYER = player
     player.refresh_visibility()
     return player
