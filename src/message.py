@@ -8,6 +8,9 @@ text_size = 50
 # Global variable to manage animating new messages
 offset = text_size
 
+def proper(message):
+    return message[0].upper() + message[1:]
+
 def new(message):
     'Adds a new message to the queue'
     global offset

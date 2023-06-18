@@ -1,6 +1,9 @@
+from math import ceil
+from random import randint, random
+
 from colors import palette_color as color
 import constants
-from random import randint, random
+from message import new as say, proper
 import settings
 from spriteloader import sprite
 
@@ -19,9 +22,9 @@ mon_lib = {
 #   'mon_name' : ['Display Name', speed, max_health, collision, sprite(x, y, color)]
     'player' : ['PLAYER', 60, 10, constants.CL_NONE, sprite(3, 8, color(constants.C_FG))],
     'unknown' : ['???', 60, -1, 255, sprite(14, 6, color(constants.C_MAGENTA))],
-    'goblin' : ['goblin', 60, 3, constants.CL_NONE, sprite(2, 17, color(constants.C_GREEN))],
-    'golem' : ['golem', 30, 50, constants.CL_NONE, sprite(9, 23, color(constants.C_GRAY))],
-    'snake' : ['snake', 180, 5, constants.CL_NONE, sprite(8, 14, color(constants.C_CYAN))],
+    'goblin' : ['', 60, 3, constants.CL_NONE, sprite(2, 17, color(constants.C_GREEN))],
+    'golem' : ['', 30, 50, constants.CL_NONE, sprite(9, 23, color(constants.C_GRAY))],
+    'snake' : ['', 180, 5, constants.CL_NONE, sprite(8, 14, color(constants.C_CYAN))],
 }
 
 def add_to_level(mon_name, x, y):
@@ -100,6 +103,11 @@ class Monster:
         tile_collision = level.tilemap.tiles[x][y].collision
         return tile_collision == tile_collision & self.collision
 
+    def get_name(self):
+        if self.display_name:
+            return self.display_name
+        return f'the {self.mon_name}'
+
     def move(self, x, y):
         '''Moves the monster to the x, y position.
         This function can move the monster to an
@@ -127,13 +135,24 @@ class Monster:
         '''This function is called when this monster dies.'''
         if self == settings.PLAYER:
             # TODO Special death functionality
-            pass
+            say('You die...')
         else:
+            say(f'{proper(self.get_name())} is killed!')
             settings.GAME.get_current_level().monsters.remove(self)
 
     def attack(self, target):
         '''Attacks the target monster with a basic attack.'''
-        target.take_damage(self.max_hp // 10)
+        target.take_damage(ceil(self.max_hp / 10))
+
+        # Print a message about what just happened
+        if target.hp <= 0:
+            return
+
+        if self == settings.PLAYER:
+            say(f'You hit {target.get_name()}!')
+
+        elif target == settings.PLAYER:
+            say(f'{proper(self.get_name())} hits you!')
 
     def try_attack(self, x, y):
         '''Attempts to attack the x, y position
