@@ -27,7 +27,7 @@ def draw(surface):
         text.write(
             surface,
             0,
-            height - text_size * (i - 1) + offset,
+            height - text_size * (i + 1) + offset,
             message,
             scale=text_size,
             color=text_color)
