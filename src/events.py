@@ -15,10 +15,10 @@ def player_move(dx, dy):
         settings.PLAYER.x + dx,
         settings.PLAYER.y + dy
     ):
-        settings.PLAYER.turn_count += 1
         do_turn()
 
 def do_turn():
+    settings.PLAYER.turn_count += 1
     settings.PLAYER.do_regen()
     for mon in settings.GAME.get_current_level().monsters:
         if mon is not settings.PLAYER:
@@ -66,15 +66,3 @@ def handle_events(events):
                     # player gets 2x regen when holding still
                     settings.PLAYER.do_regen()
                     do_turn()
-
-                # Debug print player pos
-                if event.key == pygame.K_p:
-                    print(f'p: {settings.PLAYER.x}, {settings.PLAYER.y}')
-
-                # Debug add new message
-                if event.key == pygame.K_m:
-                    say('Message: ' + str(random.randint(1, 1000)))
-
-                # Debug change color palette
-                if event.key == pygame.K_r:
-                    colors.load_palette(1)

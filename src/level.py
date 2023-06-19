@@ -1,6 +1,7 @@
 import zlib
 
 import monsters
+import settings
 import tiles
 
 class Level:
@@ -22,7 +23,8 @@ class Level:
 
         # Draw each monster
         for monster in self.monsters:
-            monster.draw(surface, camera)
+            if settings.PLAYER.los(monster.x, monster.y):
+                monster.draw(surface, camera)
 
 # Loading and saving of Levels
 

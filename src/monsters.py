@@ -19,7 +19,7 @@ def factory(mon_name, x, y):
     return mon
 
 mon_lib = {
-#   'mon_name' : ['Display Name', speed, max_health, collision, sprite(x, y, color)]
+#   'mon_name' : ['Display Name', speed, max_hp, collision, sprite(x, y, color)]
     'player' : ['PLAYER', 60, 10, constants.CL_NONE, sprite(3, 8, color(constants.C_FG))],
     'unknown' : ['???', 60, -1, 255, sprite(14, 6, color(constants.C_MAGENTA))],
     'goblin' : ['', 60, 3, constants.CL_NONE, sprite(2, 17, color(constants.C_GREEN))],
@@ -143,17 +143,22 @@ class Monster:
             # TODO Special death functionality
             say('You die...')
         else:
-            say(f'{proper(self.get_name())} is killed!')
+            if settings.PLAYER.los(self.x, self.y):
+                say(f'{proper(self.get_name())} is killed!')
             settings.GAME.get_current_level().monsters.remove(self)
 
     def attack(self, target):
         '''Attacks the target monster with a basic attack.'''
         target.take_damage(ceil(self.max_hp / 10))
 
-        # Print a message about what just happened
         if target.hp <= 0:
+            if self == settings.PLAYER:
+                # Gain xp for the kill
+                self.gain_xp(10)
+
             return
 
+        # Print a message about what just happened
         if self == settings.PLAYER:
             say(f'You hit {target.get_name()}!')
 
