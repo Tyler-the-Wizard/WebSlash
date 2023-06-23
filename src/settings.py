@@ -1,13 +1,4 @@
-import draw_context
-
 def init():
-
-    # This is a function that gets called in the main
-    # game loop to update the screen. Different values
-    # cause different behaviors, leading to different
-    # game states or "screens".
-    global CURRENT_DRAW_CONTEXT
-    CURRENT_DRAW_CONTEXT = draw_context.standard_gameplay
 
     global DO_MAIN_LOOP
     DO_MAIN_LOOP = True
