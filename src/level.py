@@ -1,5 +1,6 @@
 import zlib
 
+import items
 import monsters
 import settings
 import tiles
@@ -20,6 +21,15 @@ class Level:
         self.tilemap.draw(surface, camera)
 
         # Draw each item
+        for item in self.items:
+            # Only draw item if player has seen that tile before
+            #
+            # NOTE not a correct solution... what if items are
+            # added/removed to a square player has seen before,
+            # but this happens when they are not looking??? Will
+            # need more sophisticated tracking of state
+            if self.tilemap.tiles[item.x][item.y].seen:
+                item.draw(surface, camera)
 
         # Draw each monster
         for monster in self.monsters:
@@ -98,10 +108,41 @@ def save_monsters(level_data):
     return return_string
 
 def load_items(rows, level_data):
-    pass
+    level_data['items'] = []
+    for row in rows:
+        if len(row) > 0:
+            attrs = row.split(' ')
+            item = items.factory(
+                attrs[0],
+                int(attrs[1]),
+                int(attrs[2])
+            )
+
+            # Check to see if there is extra data on ihis item
+            if len(attrs) > 3:
+                item.display_name = attrs[3]
+                item.count = int(attrs[4])
+                item.weight = int(attrs[5])
+                item.process_usages(attrs[6])
+
+            level_data['items'].append(item)
 
 def save_items(level_data):
-    return ''
+    return_string = ''
+    for item in level_data['items']:
+        item_data = f'\
+            {item.item_name}\
+            {item.x}\
+            {item.y}\
+            {item.display_name}\
+            {item.count}\
+            {item.weight}\
+            {item.get_usages()}\
+        '
+
+        return_string += ' '.join(item_data.split()) + '\n'
+
+    return return_string
 
 def load_info(rows, level_data):
     level_data['info'] = {}
@@ -140,7 +181,7 @@ def load(filename) -> Level:
 
     return Level(
         level_data['tilemap'],
-        [],
+        level_data['items'],
         level_data['monsters'],
         level_data['info']['depth']
     )

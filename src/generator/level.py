@@ -2,7 +2,7 @@ from enum import Enum
 from random import choice, randint
 import zlib
 
-from generator import monsters
+from generator import items, monsters
 
 class Generator_Configuration:
     def __init__(self, width, height, num_room_tries, max_room_size, min_room_size, extra_connectors_rarity):
@@ -328,7 +328,10 @@ def finalize(level, filename):
     data += '\n!MONSTERS\n'
     data += monsters.populate(level, 1)
 
-    data += '\n!ITEMS\n\n!INFO\ndepth 0'
+    data += '\n!ITEMS\n'
+    data += items.populate(level, 1)
+
+    data += '\n!INFO\ndepth 0'
 
     file = open(filename, 'wb')
     file.write(zlib.compress(data.encode()))
