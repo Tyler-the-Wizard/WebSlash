@@ -46,10 +46,10 @@ settings.GAME.get_current_level().monsters.append(
 padding = 10
 
 # Set up canvas
-surf_info = pygame.Surface((settings.SCREEN_SIZE[0] * 4 // 5 - (padding * 2), 200 - (padding * 2)))
+surf_info = pygame.Surface((settings.SCREEN_SIZE[0] * 4 // 5 - (padding * 2), 200 - padding))
 surf_game = pygame.Surface((settings.SCREEN_SIZE[0] * 4 // 5 - (padding * 2), settings.SCREEN_SIZE[1] - 300 - (padding * 2)))
-surf_stat = pygame.Surface((settings.SCREEN_SIZE[0] * 4 // 5 - (padding * 2), 100 - (padding * 2)))
-surf_inv = pygame.Surface((settings.SCREEN_SIZE[0] // 5 - (padding * 2), settings.SCREEN_SIZE[1] - (padding * 2)))
+surf_stat = pygame.Surface((settings.SCREEN_SIZE[0] * 4 // 5 - (padding * 2), 100 - padding))
+surf_inv = pygame.Surface((settings.SCREEN_SIZE[0] // 5 - padding, settings.SCREEN_SIZE[1] - (padding * 2)))
 
 # Main game loop
 while settings.DO_MAIN_LOOP:
@@ -76,8 +76,8 @@ while settings.DO_MAIN_LOOP:
     # Blit all surfaces and display
     screen.blit(surf_info, (padding, padding))
     screen.blit(surf_game, (padding, 200 + padding))
-    screen.blit(surf_stat, (padding, settings.SCREEN_SIZE[1] - 100 + padding))
-    screen.blit(surf_inv, (settings.SCREEN_SIZE[0] * 4 // 5 + padding, padding))
+    screen.blit(surf_stat, (padding, settings.SCREEN_SIZE[1] - 100))
+    screen.blit(surf_inv, (settings.SCREEN_SIZE[0] * 4 // 5, padding))
 
     pygame.display.flip()
     fps_clock.tick(constants.FPS)
